@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        /* Базовые настройки */
+        "target": "es5", // Или "esnext" для современных браузеров
+        "module": "esnext", // Или "commonjs" для Node.js
+        "jsx": "react-jsx", // Указывает, как обрабатывать JSX (React 17+ используйте "react-jsx")
+        "moduleResolution": "bundler", // Алгоритм разрешения модулей (Node.js)
+        "esModuleInterop": true, // Включает взаимодействие между модулями ES и CommonJS
+        "forceConsistentCasingInFileNames": true, // Проверка регистра в именах файлов
+        "strict": true, // Включает все строгие проверки типов
+        "skipLibCheck": true, // Пропускает проверку файлов объявлений (ускоряет компиляцию)
+
+        /* Определение путей */
+        "baseUrl": "./src", // Базовый каталог для разрешения модулей
+        "paths": {
+            // Псевдонимы для путей (необязательно, но удобно)
+            "*": ["*"] //  Указывать что искать относительно baseUrl
+        },
+        "types": ["@types/three"]
+    },
+    "include": ["src/**/*"] // Включает все файлы в папке src
+}
