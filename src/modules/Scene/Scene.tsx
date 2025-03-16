@@ -10,6 +10,7 @@ import UI from "./components/UI/UI";
 
 import { FIGURE_DEFAULT_PARAMS, IFigureObjectType } from "./index";
 import "./Scene.css";
+import Light from "./components/Light/Light";
 
 export interface IScene {
     figures: IFigureObjectType;
@@ -23,6 +24,7 @@ const Scene: React.FC = () => {
     return (
         <>
             <Canvas
+                shadows
                 style={{ height: "100vh", background: "black" }}
                 gl={{ alpha: true }}
                 camera={{
@@ -34,8 +36,8 @@ const Scene: React.FC = () => {
                 }}
             >
                 <OrbitControls />
-                <directionalLight position={[5, 5, 5]} intensity={1} />
-                <ambientLight intensity={0.2} />
+                <Light controller={controller} />
+
                 <Floor />
                 <BackWall />
                 {Object.keys(scene.figures).map((name, index) => {

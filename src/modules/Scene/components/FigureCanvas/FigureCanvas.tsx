@@ -1,80 +1,67 @@
-import { EOPerations } from "modules/Scene/index";
+import { EOPerations, IFigureParams } from "modules/Scene/index";
 import Controller from "../Controller";
 import { useEffect, useRef } from "react";
-import { BufferGeometry, Color, Material, Mesh, MeshStandardMaterial } from "three";
+import { BufferGeometry, Color, Mesh, MeshPhongMaterial, MeshStandardMaterial } from "three";
 interface FigureProps {
-    figureParams: {
-        name: string;
-        position: [number, number, number];
-        geometry: BufferGeometry;
-        material: Material;
-    };
+    figureParams: IFigureParams;
     controller: Controller;
 }
 const Figure: React.FC<FigureProps> = ({ figureParams, controller }) => {
-    const meshRef = useRef<Mesh<BufferGeometry> | null>(null);
-    let { name, position, geometry, material } = figureParams;
+    const meshRef = useRef<Mesh<BufferGeometry, MeshStandardMaterial | MeshPhongMaterial>>(null);
+    let { name, position: defaultPosition, geometry, material } = figureParams;
 
     useEffect(() => {
+        const material = meshRef.current?.material;
+        const position = meshRef.current?.position;
+        if (!material || !position) return;
         controller.setPosition[name + EOPerations.setX] = (x: string) => {
-            if (!meshRef.current) return;
-            meshRef.current.position.x = Number(x);
+            position.x = Number(x);
         };
         controller.setPosition[name + EOPerations.setY] = (y: string) => {
-            if (!meshRef.current) return;
-            meshRef.current.position.y = Number(y);
+            position.y = Number(y);
+        };
+        controller.setPosition[name + EOPerations.setZ] = (z: string) => {
+            position.z = Number(z);
         };
         controller.setPosition[name + EOPerations.setZ] = (z: string) => {
             if (!meshRef.current) return;
             meshRef.current.position.z = Number(z);
         };
-        controller.setPosition[name + EOPerations.setZ] = (z: string) => {
-            if (!meshRef.current) return;
-            meshRef.current.position.z = Number(z);
-        };
-
         controller.setMaterial[name + EOPerations.setOpacity] = (opacity: string) => {
-            if (!meshRef.current || Array.isArray(meshRef.current.material)) return;
-            meshRef.current.material.opacity = Number(opacity);
-            meshRef.current.material.transparent = true;
-            meshRef.current.material.needsUpdate = true;
+            material.opacity = Number(opacity);
+            material.transparent = true;
+            material.needsUpdate = true;
         };
         controller.setMaterial[name + EOPerations.setShininess] = (shininess: string) => {
-            if (!meshRef.current || Array.isArray(meshRef.current.material)) return;
-            meshRef.current.material.shininess = Number(shininess);
-            meshRef.current.material.needsUpdate = true;
+            if (!("shininess" in material)) return;
+
+            material.shininess = Number(shininess);
+            material.needsUpdate = true;
         };
 
         controller.setMaterial[name + EOPerations.setRoughness] = (roughness: string) => {
-            if (!meshRef.current || Array.isArray(meshRef.current.material)) return;
+            if (!("roughness" in material)) return;
 
-            if (meshRef.current?.material instanceof MeshStandardMaterial) {
-                meshRef.current.material.roughness = Number(roughness);
-                meshRef.current.material.needsUpdate = true;
-            }
+            material.roughness = Number(roughness);
+            material.needsUpdate = true;
         };
         controller.setMaterial[name + EOPerations.setMetalness] = (metalness: string) => {
-            if (!meshRef.current || Array.isArray(meshRef.current.material)) return;
+            if (!("metalness" in material)) return;
 
-            meshRef.current.material.metalness = Number(metalness);
-            meshRef.current.material.needsUpdate = true;
+            material.metalness = Number(metalness);
+            material.needsUpdate = true;
         };
         controller.setMaterial[name + EOPerations.setEmissive] = (emissive: string) => {
-            if (!meshRef.current || Array.isArray(meshRef.current.material)) return;
-
-            console.log(emissive);
-            meshRef.current.material.emissive = new Color(emissive);
-            meshRef.current.material.needsUpdate = true;
+            material.emissive = new Color(emissive);
+            material.needsUpdate = true;
         };
         controller.setMaterial[name + EOPerations.setColor] = (color: string) => {
-            if (!meshRef.current || Array.isArray(meshRef.current.material)) return;
-
-            meshRef.current.material.color = new Color(color);
-            meshRef.current.material.needsUpdate = true;
+            material.color = new Color(color);
+            material.needsUpdate = true;
         };
     });
     return (
-        <mesh ref={meshRef} position={position}>
+        <mesh ref={meshRef} position={defaultPosition} castShadow>
             <primitive object={geometry} attach="geometry" />
             <primitive object={material} attach="material" />
         </mesh>

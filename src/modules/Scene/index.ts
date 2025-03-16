@@ -19,6 +19,13 @@ export enum EOPerations {
     setEmissive,
     setColor,
 }
+export enum ELight {
+    AmbientLight,
+    HemisphereLight,
+    DirectionalLight,
+    PointLight,
+    SpotLight,
+}
 export interface IFigureParams {
     name: string;
     position: [number, number, number];
@@ -49,7 +56,7 @@ export const FIGURE_DEFAULT_PARAMS: IFigureObjectType = {
         name: "tetrahedron",
         position: [2, 0.58, -1],
         geometry: new TetrahedronGeometry(1, 0),
-        material: new MeshPhongMaterial({ color: "green" }),
+        material: new MeshStandardMaterial({ color: "green" }),
         color: "green",
     },
 };

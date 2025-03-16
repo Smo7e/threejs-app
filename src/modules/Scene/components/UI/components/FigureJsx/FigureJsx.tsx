@@ -1,5 +1,5 @@
 import { EOPerations, IFigureParams } from "modules/Scene/index";
-import React from "react";
+import React, { JSXElementConstructor } from "react";
 import Controller from "../../../Controller";
 import { Color } from "three";
 
@@ -9,6 +9,12 @@ interface FigureJsxProps {
     deletefigure: Function;
 }
 const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure }) => {
+    const material = figure.material;
+
+    const getJsxWithCheck = (dep: string, jsx: JSX.Element): JSX.Element => {
+        if (dep in material) return jsx;
+        return <></>;
+    };
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <h3>{figure.name}</h3>
@@ -41,59 +47,74 @@ const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure 
                     />
                 </label>
             </div>
+
             <div>
-                <label style={{ display: "block", width: "100%" }}>
-                    opacity:
-                    <input
-                        defaultValue={1}
-                        type="range"
-                        min={0}
-                        max={1}
-                        step={0.1}
-                        placeholder="z"
-                        onChange={(e) => {
-                            controller.setMaterial[figure.name + EOPerations.setOpacity](e.target.value);
-                        }}
-                    />
-                </label>
-                <label style={{ display: "block", width: "100%" }}>
-                    roughness:
-                    <input
-                        defaultValue={1}
-                        type="range"
-                        min={0}
-                        max={1}
-                        step={0.1}
-                        placeholder="roughness"
-                        onChange={(e) => {
-                            controller.setMaterial[figure.name + EOPerations.setRoughness](e.target.value);
-                        }}
-                    />
-                </label>
-                <label style={{ display: "block", width: "100%" }}>
-                    metalness:
-                    <input
-                        defaultValue={0}
-                        type="range"
-                        min={0}
-                        max={1}
-                        step={0.1}
-                        placeholder="metalness"
-                        onChange={(e) => {
-                            controller.setMaterial[figure.name + EOPerations.setMetalness](e.target.value);
-                        }}
-                    />
-                </label>
-                <label style={{ display: "block", width: "100%" }}>
-                    emissive:
-                    <input
-                        type="color"
-                        placeholder="emissive"
-                        onChange={(e) => {
-                            controller.setMaterial[figure.name + EOPerations.setEmissive](e.target.value);
-                        }}
-                    />
-                </label>
+                {getJsxWithCheck(
+                    "opacity",
+                    <label style={{ display: "block", width: "100%" }}>
+                        opacity:
+                        <input
+                            defaultValue={1}
+                            type="range"
+                            min={0}
+                            max={1}
+                            step={0.1}
+                            placeholder="z"
+                            onChange={(e) => {
+                                controller.setMaterial[figure.name + EOPerations.setOpacity](e.target.value);
+                            }}
+                        />
+                    </label>
+                )}
+
+                {getJsxWithCheck(
+                    "roughness",
+                    <label style={{ display: "block", width: "100%" }}>
+                        roughness:
+                        <input
+                            defaultValue={1}
+                            type="range"
+                            min={0}
+                            max={1}
+                            step={0.1}
+                            placeholder="roughness"
+                            onChange={(e) => {
+                                controller.setMaterial[figure.name + EOPerations.setRoughness](e.target.value);
+                            }}
+                        />
+                    </label>
+                )}
+                {getJsxWithCheck(
+                    "metalness",
+                    <label style={{ display: "block", width: "100%" }}>
+                        metalness:
+                        <input
+                            defaultValue={0}
+                            type="range"
+                            min={0}
+                            max={1}
+                            step={0.1}
+                            placeholder="metalness"
+                            onChange={(e) => {
+                                controller.setMaterial[figure.name + EOPerations.setMetalness](e.target.value);
+                            }}
+                        />
+                    </label>
+                )}
+                {getJsxWithCheck(
+                    "emissive",
+                    <label style={{ display: "block", width: "100%" }}>
+                        emissive:
+                        <input
+                            type="color"
+                            placeholder="emissive"
+                            onChange={(e) => {
+                                controller.setMaterial[figure.name + EOPerations.setEmissive](e.target.value);
+                            }}
+                        />
+                    </label>
+                )}
+
                 <label style={{ display: "block", width: "100%" }}>
                     color:
                     <input

@@ -24,11 +24,13 @@ class Controller {
     arrFigures: any;
     setPosition: Record<string, MyFunctionType<string>>;
     setMaterial: Record<string, MyFunctionType<string>>;
+    setLight: Record<string, MyFunctionType<string>>;
 
     constructor(arr: any) {
         this.arrFigures = arr;
         this.setPosition = {};
         this.setMaterial = {};
+        this.setLight = {};
     }
     getGeometryByName(name: string): BufferGeometry {
         switch (name) {

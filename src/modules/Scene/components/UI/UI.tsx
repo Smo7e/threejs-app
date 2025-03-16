@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import FigureJsx from "./components/FigureJsx/FigureJsx";
 import { IScene } from "modules/Scene/Scene";
-import { MeshPhongMaterial, MeshStandardMaterial } from "three";
+import { Color, MeshPhongMaterial, MeshStandardMaterial } from "three";
 import Controller from "../Controller";
+import { ELight } from "modules/Scene";
 
 interface IUIProps {
     scene: IScene;
@@ -98,6 +99,42 @@ const UI: React.FC<IUIProps> = ({ scene, controller, setScene }) => {
                     />
                 );
             })}
+
+            <div style={{ position: "fixed", left: 0, top: 0, backgroundColor: "blue" }}>
+                <label style={{ display: "block", width: "100%" }}>
+                    skyColor:
+                    <input
+                        defaultValue={"#" + new Color(0xffffff).getHexString()}
+                        type="color"
+                        placeholder="skyColor"
+                        onChange={(e) => {
+                            controller.setLight[ELight.HemisphereLight + "skyColor"](e.target.value);
+                        }}
+                    />
+                </label>
+                <label style={{ display: "block", width: "100%" }}>
+                    groundColor:
+                    <input
+                        defaultValue={"#" + new Color(0xffffff).getHexString()}
+                        type="color"
+                        placeholder="emissive"
+                        onChange={(e) => {
+                            controller.setLight[ELight.HemisphereLight + "groundColor"](e.target.value);
+                        }}
+                    />
+                </label>
+                <label style={{ display: "block", width: "100%" }}>
+                    intensity:
+                    <input
+                        type="number"
+                        placeholder="intensity"
+                        defaultValue={1}
+                        onChange={(e) => {
+                            controller.setLight[ELight.HemisphereLight + "intensity"](e.target.value);
+                        }}
+                    />
+                </label>
+            </div>
         </div>
     );
 };
