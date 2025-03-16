@@ -21,12 +21,12 @@ import {
 type MyFunctionType<T> = (param: T) => void;
 
 class Controller {
-    arr: any;
+    arrFigures: any;
     setPosition: Record<string, MyFunctionType<string>>;
     setMaterial: Record<string, MyFunctionType<string>>;
 
     constructor(arr: any) {
-        this.arr = arr;
+        this.arrFigures = arr;
         this.setPosition = {};
         this.setMaterial = {};
     }

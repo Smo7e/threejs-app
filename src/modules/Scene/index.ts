@@ -1,4 +1,12 @@
-import { BoxGeometry, BufferGeometry, Material, MeshStandardMaterial, TetrahedronGeometry, TorusGeometry } from "three";
+import {
+    BoxGeometry,
+    BufferGeometry,
+    Material,
+    MeshPhongMaterial,
+    MeshStandardMaterial,
+    TetrahedronGeometry,
+    TorusGeometry,
+} from "three";
 
 export enum EOPerations {
     setX,
@@ -27,21 +35,21 @@ export const FIGURE_DEFAULT_PARAMS: IFigureObjectType = {
         name: "torus",
         position: [-2, 0.7, -1],
         geometry: new TorusGeometry(0.5, 0.2),
-        material: new MeshStandardMaterial({ color: "yellow" }),
+        material: new MeshPhongMaterial({ color: "yellow" }),
         color: "yellow",
     },
     box: {
         name: "box",
         position: [0, 0.51, -1],
         geometry: new BoxGeometry(2, 1),
-        material: new MeshStandardMaterial({ color: "blue" }),
+        material: new MeshPhongMaterial({ color: "blue" }),
         color: "blue",
     },
     tetrahedron: {
         name: "tetrahedron",
         position: [2, 0.58, -1],
         geometry: new TetrahedronGeometry(1, 0),
-        material: new MeshStandardMaterial({ color: "green" }),
+        material: new MeshPhongMaterial({ color: "green" }),
         color: "green",
     },
 };

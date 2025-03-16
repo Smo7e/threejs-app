@@ -48,6 +48,7 @@ const Scene: React.FC = () => {
                     );
                 })}
             </Canvas>
+
             <UI scene={scene} setScene={setScene} controller={controller} />
         </>
     );

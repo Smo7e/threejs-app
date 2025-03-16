@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import FigureJsx from "./components/FigureJsx/FigureJsx";
 import { IScene } from "modules/Scene/Scene";
-import { MeshStandardMaterial } from "three";
+import { MeshPhongMaterial, MeshStandardMaterial } from "three";
 import Controller from "../Controller";
 
 interface IUIProps {
@@ -11,6 +11,7 @@ interface IUIProps {
 }
 const UI: React.FC<IUIProps> = ({ scene, controller, setScene }) => {
     const figureNameRef = useRef<HTMLInputElement>(null);
+    const materialRef = useRef<HTMLSelectElement>(null);
     const geometryNameRef = useRef<HTMLSelectElement>(null);
 
     const deletefigure = (name: string): void => {
@@ -30,13 +31,17 @@ const UI: React.FC<IUIProps> = ({ scene, controller, setScene }) => {
         }
 
         let geometry = controller.getGeometryByName(geometryName);
+        const material =
+            materialRef.current?.value === "MeshPhongMaterial"
+                ? new MeshPhongMaterial({ color: "blue" })
+                : new MeshStandardMaterial({ color: "blue" });
 
         const newFigureName = figureName + `(${geometryName})`;
         const newFigure = {
             name: newFigureName,
             position: [0, 0, 0],
             geometry,
-            material: new MeshStandardMaterial({ color: "blue" }),
+            material: material,
             color: "blue",
         };
         const newFigures = { ...scene.figures, [newFigureName]: newFigure };
@@ -51,6 +56,14 @@ const UI: React.FC<IUIProps> = ({ scene, controller, setScene }) => {
                         Название фигуры:
                         <input type="text" ref={figureNameRef} defaultValue={1} />
                     </label>
+                    <label>
+                        Материал:
+                        <select ref={materialRef}>
+                            <option value="MeshPhongMaterial">MeshPhongMaterial</option>
+                            <option value="MeshStandardMaterial">MeshStandardMaterial</option>
+                        </select>
+                    </label>
+
                     <h4>Выбор фигуры:</h4>
 
                     <select ref={geometryNameRef} style={{ display: "block", width: "100%" }}>
