@@ -32,6 +32,7 @@ export interface IFigureParams {
     geometry: BufferGeometry;
     material: Material;
     color: string;
+    opacity?: number;
 }
 export interface IFigureObjectType {
     [key: string]: IFigureParams;
@@ -44,6 +45,7 @@ export const FIGURE_DEFAULT_PARAMS: IFigureObjectType = {
         geometry: new TorusGeometry(0.5, 0.2),
         material: new MeshPhongMaterial({ color: "yellow" }),
         color: "yellow",
+        opacity: 0.5,
     },
     box: {
         name: "box",

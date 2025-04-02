@@ -10,6 +10,7 @@ interface FigureJsxProps {
 }
 const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure }) => {
     const material = figure.material;
+    const { opacity = 1 } = figure;
 
     const getJsxWithCheck = (dep: string, jsx: JSX.Element): JSX.Element => {
         if (dep in material) return jsx;
@@ -18,7 +19,7 @@ const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <h3>{figure.name}</h3>
-            <div>
+            {/* <div>
                 <label style={{ display: "block", width: "100%" }}>
                     x:
                     <input
@@ -46,7 +47,7 @@ const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure 
                         onChange={(e) => controller.setPosition[figure.name + EOPerations.setZ](e.target.value)}
                     />
                 </label>
-            </div>
+            </div> */}
 
             <div>
                 {getJsxWithCheck(
@@ -54,7 +55,7 @@ const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure 
                     <label style={{ display: "block", width: "100%" }}>
                         opacity:
                         <input
-                            defaultValue={1}
+                            defaultValue={opacity}
                             type="range"
                             min={0}
                             max={1}
@@ -127,7 +128,7 @@ const FigureJsx: React.FC<FigureJsxProps> = ({ figure, controller, deletefigure 
                     />
                 </label>
             </div>
-            <button onClick={() => deletefigure(figure.name)}>Delete this figure</button>
+            {/* <button onClick={() => deletefigure(figure.name)}>Delete this figure</button> */}
         </div>
     );
 };

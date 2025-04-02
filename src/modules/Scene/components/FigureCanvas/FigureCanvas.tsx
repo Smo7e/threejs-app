@@ -8,12 +8,16 @@ interface FigureProps {
 }
 const Figure: React.FC<FigureProps> = ({ figureParams, controller }) => {
     const meshRef = useRef<Mesh<BufferGeometry, MeshStandardMaterial | MeshPhongMaterial>>(null);
-    let { name, position: defaultPosition, geometry, material } = figureParams;
+    let { name, position: defaultPosition, geometry, material, opacity = 1 } = figureParams;
 
     useEffect(() => {
         const material = meshRef.current?.material;
         const position = meshRef.current?.position;
         if (!material || !position) return;
+        material.opacity = opacity;
+        material.transparent = true;
+        material.needsUpdate = true;
+
         controller.setPosition[name + EOPerations.setX] = (x: string) => {
             position.x = Number(x);
         };
@@ -29,7 +33,6 @@ const Figure: React.FC<FigureProps> = ({ figureParams, controller }) => {
         };
         controller.setMaterial[name + EOPerations.setOpacity] = (opacity: string) => {
             material.opacity = Number(opacity);
-            material.transparent = true;
             material.needsUpdate = true;
         };
         controller.setMaterial[name + EOPerations.setShininess] = (shininess: string) => {

@@ -50,7 +50,7 @@ const UI: React.FC<IUIProps> = ({ scene, controller, setScene }) => {
     };
     return (
         <div className="figurejsx-container">
-            <div>
+            {/* <div>
                 <h3>Создание фигуры</h3>
                 <form>
                     <label style={{ display: "block" }}>
@@ -88,7 +88,7 @@ const UI: React.FC<IUIProps> = ({ scene, controller, setScene }) => {
                     </select>
                     <input type="button" value="Добавить фигуру" style={{ width: "100%" }} onClick={addFigure} />
                 </form>
-            </div>
+            </div> */}
             {Object.keys(scene.figures).map((name, index) => {
                 return (
                     <FigureJsx
