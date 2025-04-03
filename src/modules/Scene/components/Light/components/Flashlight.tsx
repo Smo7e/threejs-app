@@ -20,7 +20,7 @@ const Flashlight = () => {
             targetPosition = lastPosition;
         }
 
-        // spotLightRef.current.position.copy(camera.position);
+        spotLightRef.current.position.copy(new Vector3(targetPosition.x, 5, 5));
 
         spotLightRef.current.target.position.copy(targetPosition);
         spotLightRef.current.target.updateMatrixWorld();
