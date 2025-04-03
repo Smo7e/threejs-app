@@ -7,35 +7,35 @@ const Flashlight = () => {
     const { camera, pointer, raycaster, scene } = useThree();
     let lastPosition = new Vector3(0, 0, 0);
 
-    // useFrame(() => {
-    //     if (!spotLightRef.current) return;
+    useFrame(() => {
+        if (!spotLightRef.current) return;
 
-    //     raycaster.setFromCamera(pointer, camera);
-    //     const intersects = raycaster.intersectObjects(scene.children, true);
-    //     let targetPosition = new Vector3();
-    //     if (intersects.length > 0) {
-    //         targetPosition = intersects[0].point;
-    //         lastPosition = targetPosition;
-    //     } else {
-    //         targetPosition = lastPosition;
-    //     }
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects(scene.children, true);
+        let targetPosition = new Vector3();
+        if (intersects.length > 0) {
+            targetPosition = intersects[0].point;
+            lastPosition = targetPosition;
+        } else {
+            targetPosition = lastPosition;
+        }
 
-    //     spotLightRef.current.position.copy(camera.position);
+        // spotLightRef.current.position.copy(camera.position);
 
-    //     spotLightRef.current.target.position.copy(targetPosition);
-    //     spotLightRef.current.target.updateMatrixWorld();
-    // });
+        spotLightRef.current.target.position.copy(targetPosition);
+        spotLightRef.current.target.updateMatrixWorld();
+    });
 
     return (
         <spotLight
             ref={spotLightRef}
             color="white"
-            intensity={10}
-            angle={2}
+            intensity={2}
+            angle={0.5}
             penumbra={1}
             distance={100}
             decay={0.1}
-            position={[-5, 2, 2]}
+            position={[0, 5, 5]}
             castShadow
         />
     );
